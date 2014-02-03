@@ -29,7 +29,7 @@ CREATE TABLE entries(
 
 
 app.get("/", function(request,response){
-	if (request.query.userName !== ''){
+	if (request.query.userName){
 		if(request.query.userComment !== ''){
 			response.render("ResultPage")
 		}
@@ -39,8 +39,9 @@ app.get("/", function(request,response){
 			response.write(request.query.userComment);
 		}
 	}
-	
-    response.render("application");
+	else{
+		response.render("application");
+	}    
     response.end();
 });
 
