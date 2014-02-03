@@ -5,12 +5,23 @@
 </head>
 <body> 
 	<h1> Please sign in our guestbook: </h1>
-	<form> 
-		<input type=text name=userName placeholder='name...'> 
-		<br>
-		<input type=text name=userComment placeholder='comments..'>
-		<br>
-		<input type=submit> 
-	</form> 
+	<div class='container'>
+		<form> 
+			<input type=text name=userName placeholder='name...'> 
+			<br>
+			<input type=text name=userComment placeholder='comments..'>
+			<br>
+			<input type=submit value='Submit Guest'> 
+		</form> 
+		<script>
+			document.forms[0].addEventListener("submit", function(event){
+				var form = this;
+				if(form.querySelectorAll("input")[1].value == ''){
+					event.preventDefault();
+					alert("Please enter comment");
+				}
+			});
+		</script>
+	</div>
 </body> 
 </html>

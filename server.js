@@ -27,21 +27,32 @@ CREATE TABLE entries(
 * loads application html - calls application.jade which calls application.html
 **/
 
+//Counter for the ID index
+var indexCounter = 1; 
+
+function GetDateTime(){
+	var currentdate = new Date(); 
+	var datetime = "Created on: " + currentdate.getDate() + "/"
+	                + (currentdate.getMonth()+1)  + "/" 
+	                + currentdate.getFullYear() + " @ "  
+	                + currentdate.getHours() + ":"  
+	                + currentdate.getMinutes() + ":" 
+	                + currentdate.getSeconds();
+	return datetime;
+}
+
 
 app.get("/", function(request,response){
-	if (request.query.userName){
-		if(request.query.userComment !== ''){
-			response.render("ResultPage")
-		}
-		else{
-			response.writeHead(200,{"Content-Type": "text/html"});
-			response.write("Hello " + request.query.userName);
-			response.write(request.query.userComment);
-		}
+	if(request.query.userComment && request.query.userComment != ''){ //First time on page will load application
+		var dateTime = GetDateTime();						
+		var row = [indexCounter, request.query.userName, request.query.userComment, dateTime];
+		console.log(row);
+		indexCounter++;
+		response.render('ResultPage');  
 	}
 	else{
-		response.render("application");
-	}    
+		response.render('application');
+	}
     response.end();
 });
 
