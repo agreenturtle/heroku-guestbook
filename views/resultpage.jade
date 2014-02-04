@@ -1,1 +1,37 @@
-include ResultPage.html
+
+head
+	title My Guestbook
+
+	link(href='/css/bootstrap.min.css' rel='stylesheet')
+
+body
+	h1#title Guestbook
+	div.container
+		table(class='table table-hover')
+			thread
+				tr
+					th
+						div.row-odd
+							div.col-md-1.
+								ID
+							div.col-md-2.
+								Name
+							div.col-md-6.
+								Comments
+							div.col-md-3.
+								Created on
+				- for(var i = 0; i<10; ++i){
+					tbody
+						tr
+							td
+								div.row-even
+									div.col-md-1.
+										001
+									div.col-md-2.
+										Brian Bugjai
+									div.col-md-6.
+										Groom's Friend
+									div.col-md-3.
+										2/2/2014
+				- }
+			
