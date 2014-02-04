@@ -12,19 +12,11 @@ app.set('view engine', 'jade');
 app.use(express.static(process.cwd() + '/public'));
 
 /**
-* Input sample data into table (table name is entries) - table was created in seeds.js (ran only one time and doesn't need to be ran again.)
-CREATE TABLE entries(
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255), 
   comment TEXT NOT NULL, 
   created_at DATETIME NOT NULL, 
   PRIMARY KEY(id))
-**/
-
-//connection.query('INSERT INFO entries (id, name, comment, created_at) VALUES (1, "John Doe")')
-
-/**
-* loads application html - calls application.jade which calls application.html
 **/
 
 //Counter for the ID index
@@ -43,12 +35,15 @@ function GetDateTime(){
 
 
 app.get("/", function(request,response){
-	if(request.query.userComment && request.query.userComment != ''){ //First time on page will load application
+	if(request.query.userComment && request.query.userComment != ''){ //check for page's initial load
 		var dateTime = GetDateTime();						
 		var row = [indexCounter, request.query.userName, request.query.userComment, dateTime];
 		console.log(row);
 		indexCounter++;
-		response.render('ResultPage');  
+		//Insert data into the database
+		//connection.query('INSERT INTO entries (id, name, comment, created_at) VALUES (' + row[0] + ', ' + row[1] + ', ' + row[2] + ', ' + row[3] + ')')
+		//ResultPage to pull the results from the database
+		response.render('resultpage');  
 	}
 	else{
 		response.render('application');
