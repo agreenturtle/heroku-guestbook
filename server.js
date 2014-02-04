@@ -11,17 +11,12 @@ app.set('view engine', 'jade');
 
 app.use(express.static(process.cwd() + '/public'));
 
-/**
-  id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(255), 
-  comment TEXT NOT NULL, 
-  created_at DATETIME NOT NULL, 
-  PRIMARY KEY(id))
-**/
-
 //Counter for the ID index
 var indexCounter = 1; 
-
+/***************************************************************************/
+/**
+* This function will get the current date and time and return in the format "Created on: dd/mm/yyyy @ hh:mm:ss"
+**/
 function GetDateTime(){
 	var currentdate = new Date(); 
 	var datetime = "Created on: " + currentdate.getDate() + "/"
@@ -33,6 +28,27 @@ function GetDateTime(){
 	return datetime;
 }
 
+/**
+* This function will insert row into the MySQL table entries
+* row - Array with the format of [ID#, name, comments, date/time]
+**/
+function InsertData(row){
+	connection.query('INSERT INTO entries (id, name, comment, created_at) VALUES (' 
+					 + row[0] + ', ' 
+					 + row[1] + ', '
+		 			 + row[2] + ', ' 
+					 + row[3] + ')');
+}
+
+/**
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255), 
+  comment TEXT NOT NULL, 
+  created_at DATETIME NOT NULL, 
+  PRIMARY KEY(id))
+**/
+
+/****************************************************************/
 
 app.get("/", function(request,response){
 	if(request.query.userComment && request.query.userComment != ''){ //check for page's initial load
@@ -41,7 +57,7 @@ app.get("/", function(request,response){
 		console.log(row);
 		indexCounter++;
 		//Insert data into the database
-		//connection.query('INSERT INTO entries (id, name, comment, created_at) VALUES (' + row[0] + ', ' + row[1] + ', ' + row[2] + ', ' + row[3] + ')')
+		//InsertData(row);
 		//ResultPage to pull the results from the database
 		response.render('resultpage');  
 	}
@@ -50,6 +66,7 @@ app.get("/", function(request,response){
 	}
     response.end();
 });
+
 
 var port = Number(process.env.PORT || 8888);
 app.listen(port);

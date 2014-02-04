@@ -1,0 +1,30 @@
+<!-- This is used just as a backup of a working Application.html -->
+<html><script src="../server.js" type="text/javascript" charset="utf-8"></script>
+
+<head>
+	<title> Guestbook </title>
+</head>
+<body> 
+	<h1> Please sign in our guestbook: </h1>
+	<form name='GuestForm'>
+		<input type=text name=userName placeholder='name...'> 
+		<br>
+		<input type=text name=userComment placeholder='comments..'>
+		<br>
+		<br>
+		<input type=submit value='Submit Guest'> 
+	</form> 
+		<script>
+			/**
+			* This function will verify that comment field is entered in
+			**/
+			document.forms['GuestForm'].addEventListener("submit", function(event){
+				var form = this;
+				if(form.querySelectorAll("input")[1].value == ''){
+					event.preventDefault();
+					alert("Please enter comment");
+				}
+			});
+		</script>
+</body> 
+</html>
