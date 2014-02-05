@@ -45,6 +45,23 @@ function InsertData(row){
 					 + row[3] + ')');
 }
 
+function GetIdCount(){
+	connection.query('SELECT count(id) AS idCount FROM entries', function(err,rows){
+		//var totalID = 0;
+		//var idArray = [];
+		if (err){throw err;} //it throws an error
+		else{
+			if(typeof idCount === 'undefined'){
+				return 0;
+			}
+			else{
+				return idCount;
+			}
+		}
+	});
+	//return totalID;
+}
+
 /**
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255), 
@@ -57,10 +74,11 @@ function InsertData(row){
 
 app.get("/", function(request,response){
 	if(request.query.userComment && request.query.userComment != ''){ //check for page's initial load
-		var dateTime = GetDateTime();						
-		var row = [indexCounter, request.query.userName, request.query.userComment, dateTime];
+		var dateTime = GetDateTime();	
+		var idTotal = GetIdCount();
+		console.log(idTotal);					
+		var row = [idTotal, request.query.userName, request.query.userComment, dateTime];
 		console.log(row);
-		indexCounter++; //TO DO: need to eventually do a search for last index in the table and assign it there
 		//Insert data into the database
 		InsertData(row);
 		//ResultPage to pull the results from the database

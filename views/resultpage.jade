@@ -20,26 +20,26 @@ body
 								Comments
 							div.col-md-3.
 								Created on	
-				- var mysql = require("mysql2");
-				- var connection = mysql.createConnection({user: 'bd6c78b4c94ff4', password: 'b92672d2', host: 'us-cdbr-east-05.cleardb.net', database: 'heroku_fce19200850a746'});			
-				- var idArray = [];
-				- connection.query('SELECT count(*) AS idCount FROM entries WHERE table_schema = "entries" AND table_name = "heroku_fce19200850a746";' function (err,rows){
-					- if (err){throw err;}
-					- else{
-						- var counter = 0;
-						- for each(var item in idCount){
-							- idArray[counter] = item;
-							- counter++;
-						- }
-					- }
-				- }
-				- for(var i = 0; i < idArray.length; i++){
+				- //var mysql = require("mysql2");
+				- //var connection = mysql.createConnection({user: 'bd6c78b4c94ff4', password: 'b92672d2', host: 'us-cdbr-east-05.cleardb.net', database: 'heroku_fce19200850a746'});			
+				- //var idArray = [];
+				- //connection.query('SELECT count(*) AS idCount FROM entries WHERE table_schema = "entries" AND table_name = "heroku_fce19200850a746";' function (err,rows){
+					- //if (err){throw err;}
+					- //else{
+						- //var counter = 0;
+						- //for each(var item in idCount){
+							- //idArray[counter] = item;
+							- //counter++;
+						- //}
+					- //}
+				- //}
+				- for(var i = 0; i < 10; i++){
 					tbody
 						tr
 							td
 								div.row-even
 									div.col-md-1.
-										#{idArray[i]}
+										#{i}
 									div.col-md-2.
 										Brian Bugaj
 									div.col-md-6.
