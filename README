@@ -1,1 +1,5 @@
 Guestbook on Heroku
+
+To Run:
+node server.js
+

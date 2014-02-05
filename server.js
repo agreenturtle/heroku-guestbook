@@ -20,13 +20,13 @@ var indexCounter = 1;
 /***************************************************************************/
 /**
 * This function will get the current date and time and return in the format 
-  "Created on: dd/mm/yyyy @ hh:mm:ss"
+  dd/mm/yyyy hh:mm:ss"
 **/
 function GetDateTime(){
 	var currentdate = new Date(); 
-	var datetime = "Created on: " + currentdate.getDate() + "/"
+	var datetime = currentdate.getDate() + "/"
 	                + (currentdate.getMonth()+1)  + "/" 
-	                + currentdate.getFullYear() + " @ "  
+	                + currentdate.getFullYear() + " "  
 	                + currentdate.getHours() + ":"  
 	                + currentdate.getMinutes() + ":" 
 	                + currentdate.getSeconds();
@@ -34,8 +34,12 @@ function GetDateTime(){
 }
 
 /**
-* This function will insert row into the MySQL table entries
-* row - Array with the format of [ID#, name, comments, date/time]
+* This function will insert a row of data in the table "entries"
+* It will also calculate how many guests are entered in to correctly 
+  enter the next guest with the correct ID
+* guestName - is the name that the user entered
+* guestComment - is the comment that the user entered
+* dataRow - Array with the format of [ID#, name, comments, date/time]
 **/
 function InsertData(guestName,guestComment){
 	connection.query('SELECT count(id) AS totalIds FROM entries', function(err,rows){
@@ -80,9 +84,13 @@ app.get("/", function(request,response){
 		//Insert data into the database
 		var guestName = request.query.userName;
 		var guestComment = request.query.userComment;
-		InsertData(guestName, guestComment);
+		//InsertData(guestName, guestComment);
 		//ResultPage to pull the results from the database
-		response.render('resultpage');  
+		connection.query('SELECT * FROM entries', function(err,rows){
+			console.log(rows);
+			response.render('resultpage', {'rows':rows}); 
+		});
+		 
 	}
 	else{
 		response.render('application');
