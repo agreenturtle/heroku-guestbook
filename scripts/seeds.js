@@ -17,7 +17,11 @@ connection.query('SELECT count(*) AS tableCount FROM information_schema.tables W
 });
 */
 
-connection.query('CREATE TABLE entries(id INT NOT NULL AUTO_INCREMENT,name VARCHAR(255), comment TEXT NOT NULL, created_at DATETIME NOT NULL, PRIMARY KEY(id));', function(err2,rows2){
+connection.query('CREATE TABLE entries(id INT NOT NULL AUTO_INCREMENT,
+									   name VARCHAR(255), 
+									   comment TEXT NOT NULL, 
+									   created_at DATETIME NOT NULL, 
+									   PRIMARY KEY(id));', function(err2,rows2){
 	console.log('in query');
 	if(err2){
 		console.log('error: ', err2);

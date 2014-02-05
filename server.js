@@ -2,7 +2,10 @@
 var express = require("express");
 var mysql = require("mysql2");
 
-var connection = mysql.createConnection({user: 'bd6c78b4c94ff4', password: 'b92672d2', host: 'us-cdbr-east-05.cleardb.net', database: 'heroku_fce19200850a746'});
+var connection = mysql.createConnection({user: 'bd6c78b4c94ff4', 
+										 password: 'b92672d2', 
+										 host: 'us-cdbr-east-05.cleardb.net', 
+										 database: 'heroku_fce19200850a746'});
 
 var app = express();
 
@@ -13,9 +16,11 @@ app.use(express.static(process.cwd() + '/public'));
 
 //Counter for the ID index
 var indexCounter = 1; 
+
 /***************************************************************************/
 /**
-* This function will get the current date and time and return in the format "Created on: dd/mm/yyyy @ hh:mm:ss"
+* This function will get the current date and time and return in the format 
+  "Created on: dd/mm/yyyy @ hh:mm:ss"
 **/
 function GetDateTime(){
 	var currentdate = new Date(); 
@@ -48,14 +53,14 @@ function InsertData(row){
   PRIMARY KEY(id))
 **/
 
-/****************************************************************/
+/**************************************************************************/
 
 app.get("/", function(request,response){
 	if(request.query.userComment && request.query.userComment != ''){ //check for page's initial load
 		var dateTime = GetDateTime();						
 		var row = [indexCounter, request.query.userName, request.query.userComment, dateTime];
 		console.log(row);
-		indexCounter++;
+		indexCounter++; //TO DO: need to eventually do a search for last index in the table and assign it there
 		//Insert data into the database
 		//InsertData(row);
 		//ResultPage to pull the results from the database
