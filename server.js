@@ -37,29 +37,32 @@ function GetDateTime(){
 * This function will insert row into the MySQL table entries
 * row - Array with the format of [ID#, name, comments, date/time]
 **/
-function InsertData(row){
-	connection.query('INSERT INTO entries (id, name, comment, created_at) VALUES (' 
-					 + row[0] + ', ' 
-					 + row[1] + ', '
-		 			 + row[2] + ', ' 
-					 + row[3] + ')');
-}
-
-function GetIdCount(){
-	connection.query('SELECT count(id) AS idCount FROM entries', function(err,rows){
-		//var totalID = 0;
-		//var idArray = [];
+function InsertData(guestName,guestComment){
+	connection.query('SELECT count(id) AS totalIds FROM entries', function(err,rows){
+		console.log(rows);
 		if (err){throw err;} //it throws an error
 		else{
-			if(typeof idCount === 'undefined'){
-				return 0;
-			}
-			else{
-				return idCount;
-			}
-		}
+			var dateTime = GetDateTime();	
+			//console.log(rows[0].totalIds);
+			var idCount = parseInt(rows[0].totalIds) + 1;
+			console.log(idCount);
+			var dataRow = [rows[0].totalIds, guestName, guestComment, dateTime];
+			console.log(dataRow);
+			
+			var myString = 'INSERT INTO entries (id, name, comment, created_at) VALUES (\"'
+							 + dataRow[0] + '\", \"' 
+							 + dataRow[1] + '\", \"'
+				 			 + dataRow[2] + '\", \"' 
+							 + dataRow[3] + '\")';
+			console.log(myString);
+			
+			connection.query('INSERT INTO entries (id, name, comment, created_at) VALUES (\"'
+							 + dataRow[0] + '\", \"' 
+							 + dataRow[1] + '\", \"'
+				 			 + dataRow[2] + '\", \"' 
+							 + dataRow[3] + '\")');
+		}	
 	});
-	//return totalID;
 }
 
 /**
@@ -74,13 +77,10 @@ function GetIdCount(){
 
 app.get("/", function(request,response){
 	if(request.query.userComment && request.query.userComment != ''){ //check for page's initial load
-		var dateTime = GetDateTime();	
-		var idTotal = GetIdCount();
-		console.log(idTotal);					
-		var row = [idTotal, request.query.userName, request.query.userComment, dateTime];
-		console.log(row);
 		//Insert data into the database
-		InsertData(row);
+		var guestName = request.query.userName;
+		var guestComment = request.query.userComment;
+		InsertData(guestName, guestComment);
 		//ResultPage to pull the results from the database
 		response.render('resultpage');  
 	}
