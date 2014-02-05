@@ -5,10 +5,6 @@ head
 	link(href='/css/bootstrap.min.css' rel='stylesheet')
 
 body
-- var mysql = require("mysql2");
-- var connection = mysql.createConnection({user: 'bd6c78b4c94ff4', password: 'b92672d2', host: 'us-cdbr-east-05.cleardb.net', database: 'heroku_fce19200850a746'});
-
-
 	h1#title Guestbook
 	div.container
 		table(class='table table-hover')
@@ -23,9 +19,11 @@ body
 							div.col-md-6.
 								Comments
 							div.col-md-3.
-								Created on				
+								Created on	
+				- var mysql = require("mysql2");
+				- var connection = mysql.createConnection({user: 'bd6c78b4c94ff4', password: 'b92672d2', host: 'us-cdbr-east-05.cleardb.net', database: 'heroku_fce19200850a746'});			
 				- var idArray = [];
-				-connection.query('SELECT count(*) AS idCount FROM entries WHERE table_schema = "entries" AND table_name = "heroku_fce19200850a746";' function (err,rows){
+				- connection.query('SELECT count(*) AS idCount FROM entries WHERE table_schema = "entries" AND table_name = "heroku_fce19200850a746";' function (err,rows){
 					- if (err){throw err;}
 					- else{
 						- var counter = 0;
@@ -41,7 +39,7 @@ body
 							td
 								div.row-even
 									div.col-md-1.
-										- idArray[i];
+										#{idArray[i]}
 									div.col-md-2.
 										Brian Bugaj
 									div.col-md-6.

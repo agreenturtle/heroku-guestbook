@@ -62,7 +62,7 @@ app.get("/", function(request,response){
 		console.log(row);
 		indexCounter++; //TO DO: need to eventually do a search for last index in the table and assign it there
 		//Insert data into the database
-		//InsertData(row);
+		InsertData(row);
 		//ResultPage to pull the results from the database
 		response.render('resultpage');  
 	}
