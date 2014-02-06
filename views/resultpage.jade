@@ -15,9 +15,9 @@ body
 								ID
 							div.col-md-2.
 								Name
-							div.col-md-6.
+							div.col-md-5.
 								Comments
-							div.col-md-3.
+							div.col-md-4.
 								Created on					
 				- for(var i = 0; i < rows.length; i++){
 					tbody
@@ -28,12 +28,12 @@ body
 										#{rows[i].id}
 									div.col-md-2.
 										#{rows[i].name}
-									div.col-md-6.
+									div.col-md-5.
 										#{rows[i].comment}
-									div.col-md-3.
+									div.col-md-4.
 										#{rows[i].created_at}
 				- }
 				
-		button(type='submit' class='btn btn-info' formaction='/home' formmethod='post').
+		button(type='submit' class='btn btn-info' formaction='/sign-in' formmethod='post').
 			Back
 			

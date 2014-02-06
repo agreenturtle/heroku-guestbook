@@ -1,28 +1,28 @@
 <html><script src="../server.js" type="text/javascript" charset="utf-8"></script>
 
 <head>
-	<title> Delete a Guest from Guestbook </title>
+	<title> Remove a Guest from Guestbook </title>
 	
 	<!-- Bootstrap -->
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body> 
 	
-	<h3> Please enter whom you'd like to delete: </h3>
+	<h3> Please enter whom you'd like to remove: </h3>
 	<br>
 	<div class='container col-md-6'>
-		<form name='GuestForm' class='form' role='form'>
+		<form name='RemoveForm' class='form' role='form'>
 			<div class='form-group'>
 				<label for='inputID'>ID</label>
-				<input type='text' name='userID' class='form-control input-normal' placeholder='Enter ID'>
+				<input type='text' name='removeID' class='form-control input-normal' placeholder='Enter ID'>
 			</div>
 			<div class='form-group'>
 				<label for='inputName'>Name</label>
-				<input type='text' name='userName' class='form-control input-normal' placeholder='Enter Name'>
+				<input type='text' name='removeName' class='form-control input-normal' placeholder='Enter Name'>
 			</div>
 			<div class='form-group'>
-				<button type='submit' formaction='/DeleteGuest' formmethod='post' class='btn btn-danger'>Delete Guest</button>
-				<button type='submit' formaction='/home' formmethod='post' class='btn btn-default'>Cancel</button>
+				<button type='submit' formaction='/DeleteGuest' formmethod='get' class='btn btn-danger'>Delete Guest</button>
+				<button type='submit' formaction='/sign-in' formmethod='post' class='btn btn-default'>Cancel</button>
 			</div>
 		</form>
 	</div>

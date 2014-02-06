@@ -41,13 +41,12 @@ function GetDateTime(){
 **/
 app.get("/", function(request,response){
 	if(request.query.userComment && request.query.userComment != ''){ //check for page's initial load
-		connection.query('SELECT count(id) AS totalIds FROM entries', function(err,rows){
-
+		connection.query('SELECT * FROM entries', function(err,rows){
 			if (err){throw err;} 
 			else{
-				var dateTime = GetDateTime();	
-				var idCount = parseInt(rows[0].totalIds) + 1;
-				var dataRow = [rows[0].totalIds, request.query.userName, request.query.userComment, dateTime];			
+				var dateTime = GetDateTime();
+				var idCount = rows.length + 1;
+				var dataRow = [idCount, request.query.userName, request.query.userComment, dateTime];			
 			
 				connection.query('INSERT INTO entries (id, name, comment, created_at) VALUES (\"'
 								 + dataRow[0] + '\", \"' 
@@ -79,30 +78,49 @@ app.post("/ViewGuestbook", function(request,response){
 /**
 * Goes back to the HomePage (application.html) page
 **/
-app.post("/home", function(request,response){
-	response.render('application');
-	response.end();
+app.post("/sign-in", function(req,res){
+	res.render('application');
+	res.end();
 });
 
-app.post("/Delete", function(request,reponse){
-	response.render('deleteguest');
-	response.end();
+/**
+* Opens deleteguest.jade when Delete is clicked
+**/
+app.post("/RemoveGuest", function(req,res){
+	res.render('deleteguest');
+	res.end();
 });
 
 /**
 * Deletes selected guest from entries
 **/
-app.post("/DeleteGuest", function(request,response){
-	if(request.query.userName == '' && request.query.userID = ''){
-		response.render('application');
-		response.end();
+app.get("/DeleteGuest", function(req,res){
+	if(req.query.removeName == '' && req.query.removeID == ''){
+		res.render('application');
+		res.end();
 	}
 	else{
-		connection.query('DELETE FROM entries WHERE id = ' + request.query.userID + 'AND name = ' + request.query.userName, function(err,rows){
+		//builds the queryString depending on what was entered in(id & name or id OR name)
+		var queryString = 'DELETE FROM entries WHERE ';
+		var addAnd = false;
+		if(req.query.removeID != ''){
+			queryString += 'id = \"' + req.query.removeID + '\"';
+			addAnd = true;
+		}
+		if(req.query.removeName != ''){
+			if(addAnd){
+				queryString += ' AND ';
+			}
+			queryString += 'name = \"' + req.query.removeName + '\"';
+		}
+
+		connection.query(queryString, function(err,rows){
 			if(err){throw err;}
 			else{
-				response.render('resultpage', {'rows':rows});
-				response.end();
+				connection.query('SELECT * FROM entries', function(err,rows){
+					res.render('resultpage', {'rows':rows});
+					res.end();
+				});
 			}
 		});
 	}
