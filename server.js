@@ -6,6 +6,7 @@ var connection = mysql.createConnection({user: 'bd6c78b4c94ff4',
 										 password: 'b92672d2', 
 										 host: 'us-cdbr-east-05.cleardb.net', 
 										 database: 'heroku_fce19200850a746'});
+connection.connect();
 
 var app = express();
 
@@ -36,7 +37,6 @@ function GetDateTime(){
 app.get("/", function(req, res){
 		res.render('application');
 		res.end();
-
 });
 
 /**
@@ -46,7 +46,7 @@ app.get("/", function(req, res){
 			[ID, name, comment, date]
 **/
 app.post("/submit", function(request,response){
-	if(request.body.userComment && request.body.userComment != ''){ //check for page's initial load
+	if(request.body.userComment && request.body.userComment != ''){ //should never need this...
 		connection.query('SELECT * FROM entries', function(err,rows){
 			if (err){throw err;} 
 			else{

@@ -50,15 +50,14 @@
 	</div>
 	  
 	<script>
-		//var submitButton = document.form['GuestForm'].getElementById('signIn');
-		//document.forms['GuestForm'].addEventListener("submit", function(event){
-		//submitButton.addEventListener("click", function(event){
-		//	var form = this;
-		//	if(form.querySelectorAll("input")[1].value == ''){
-		//		event.preventDefault();
-		//		alert("Please enter comment");
-		//	}
-		//});
+		//this will alert the user if they try to submit without entering a comment
+		document.forms['GuestForm'].addEventListener("submit", function(event){
+			var form = this;
+			if(form.querySelectorAll("input")[1].value == ''){
+				event.preventDefault();
+				alert("Please enter comment");
+			}
+		});
 	</script>
 </body>	
 </html>
