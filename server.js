@@ -24,12 +24,13 @@ var indexCounter = 1;
 **/
 function GetDateTime(){
 	var currentdate = new Date(); 
-	var datetime = currentdate.getDate() + "/"
-	                + (currentdate.getMonth()+1)  + "/" 
+	var datetime = (currentdate.getMonth()+1) + "/"
+	                + currentdate.getDate()  + "/" 
 	                + currentdate.getFullYear() + " "  
 	                + currentdate.getHours() + ":"  
-	                + currentdate.getMinutes() + ":" 
+	                + currentdate.getMinutes() + ":"
 	                + currentdate.getSeconds();
+	
 	return datetime;
 }
 
@@ -47,24 +48,20 @@ function InsertData(guestName,guestComment){
 		if (err){throw err;} //it throws an error
 		else{
 			var dateTime = GetDateTime();	
-			//console.log(rows[0].totalIds);
 			var idCount = parseInt(rows[0].totalIds) + 1;
-			console.log(idCount);
-			var dataRow = [rows[0].totalIds, guestName, guestComment, dateTime];
-			console.log(dataRow);
-			
-			var myString = 'INSERT INTO entries (id, name, comment, created_at) VALUES (\"'
+			var dataRow = [rows[0].totalIds, guestName, guestComment, dateTime];			
+			/*var myString = 'INSERT INTO entries (id, name, comment, created_at) VALUES (\"'
 							 + dataRow[0] + '\", \"' 
 							 + dataRow[1] + '\", \"'
-				 			 + dataRow[2] + '\", \"' 
-							 + dataRow[3] + '\")';
-			console.log(myString);
+				 			 + dataRow[2] + '\", STR_TO_DATE(\"' 
+							 + dataRow[3] + '\", \"%m/%d/%Y %H:%i:%s\"))';
+			console.log(myString);*/
 			
 			connection.query('INSERT INTO entries (id, name, comment, created_at) VALUES (\"'
 							 + dataRow[0] + '\", \"' 
 							 + dataRow[1] + '\", \"'
-				 			 + dataRow[2] + '\", \"' 
-							 + dataRow[3] + '\")');
+				 			 + dataRow[2] + '\", STR_TO_DATE(\"' 
+							 + dataRow[3] + '\", \"%m/%d/%Y %H:%i:%s\"))');
 		}	
 	});
 }
@@ -84,18 +81,27 @@ app.get("/", function(request,response){
 		//Insert data into the database
 		var guestName = request.query.userName;
 		var guestComment = request.query.userComment;
-		//InsertData(guestName, guestComment);
+		InsertData(guestName, guestComment);
+		
 		//ResultPage to pull the results from the database
 		connection.query('SELECT * FROM entries', function(err,rows){
-			console.log(rows);
+			//console.log(rows);
 			response.render('resultpage', {'rows':rows}); 
+			response.end();
 		});
-		 
 	}
 	else{
 		response.render('application');
+		response.end();
 	}
-    response.end();
+});
+
+app.post("/", function(request,respond){
+	connection.query('SELECT * FROM entries', function(err,rows){
+
+		response.render('resultpage', {'rows':rows}); 
+		response.end();
+	});
 });
 
 
