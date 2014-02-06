@@ -99,7 +99,7 @@ app.post("/DeleteGuest", function(req,res){
 		res.render('application');
 		res.end();
 	}
-	else{
+	else{  
 		//builds the queryString depending on what was entered in(id & name or id OR name)
 		var queryString = 'DELETE FROM entries WHERE ';
 		var addAnd = false;
