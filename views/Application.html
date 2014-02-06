@@ -21,8 +21,9 @@
 			<input type='text' name='userComment' class='form-control input-normal' placeholder='Enter Comments'>
 		</div>
 		<div class='form-group'>
-			<button type='submit' class='btn btn-default'>Submit Guest</button>
-			<button type='submit' formaction='/' formmethod='POST' class='btn btn-primary'>View Guestbook</button>
+			<button id='signIn' type='submit' class='btn btn-default'>Submit Guest</button>
+			<button type='submit' formaction='/ViewGuestbook' formmethod='post' class='btn btn-primary'>View Guestbook</button>
+			<button type='submit' formaction='/Delete' formmethod='post' class='btn btn-danger'>Delete</button>
 		</div>
 	</form>
 	</div>
@@ -45,7 +46,9 @@
 	</div>
 	  
 	<script>
+		//var submitButton = document.form['GuestForm'].getElementById('signIn');
 		document.forms['GuestForm'].addEventListener("submit", function(event){
+		//submitButton.addEventListener("click", function(event){
 			var form = this;
 			if(form.querySelectorAll("input")[1].value == ''){
 				event.preventDefault();
