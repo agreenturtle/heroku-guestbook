@@ -68,7 +68,7 @@ app.get("/", function(request,response){
 * This is when the View Guestbook button is clicked (TO DO: Needs to enter comment to work)
 * Will render resultpage.jade and will display the table entries
 **/
-app.post("/ViewGuestbook", function(request,response){
+app.get("/ViewGuestbook", function(request,response){
 	connection.query('SELECT * FROM entries', function(err,rows){
 		response.render('resultpage', {'rows':rows}); 
 		response.end();
@@ -78,7 +78,7 @@ app.post("/ViewGuestbook", function(request,response){
 /**
 * Goes back to the HomePage (application.html) page
 **/
-app.post("/sign-in", function(req,res){
+app.get("/sign-in", function(req,res){
 	res.render('application');
 	res.end();
 });
@@ -113,7 +113,6 @@ app.get("/DeleteGuest", function(req,res){
 			}
 			queryString += 'name = \"' + req.query.removeName + '\"';
 		}
-
 		connection.query(queryString, function(err,rows){
 			if(err){throw err;}
 			else{
