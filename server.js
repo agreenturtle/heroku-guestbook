@@ -7,7 +7,6 @@ var connection = mysql.createConnection({user: 'bd6c78b4c94ff4',
 										 host: 'us-cdbr-east-05.cleardb.net', 
 										 database: 'heroku_fce19200850a746'});
 
-
 var app = express();
 
 app.use(express.bodyParser());
@@ -35,7 +34,6 @@ function GetDateTime(){
 /*********************** Requests & Response *********************************/
 
 app.get("/", function(req, res){
-		connection.connect();
 		res.render('application');
 		res.end();
 });
@@ -47,6 +45,7 @@ app.get("/", function(req, res){
 			[ID, name, comment, date]
 **/
 app.post("/submit", function(request,response){
+	connection.connect();
 	if(request.body.userComment && request.body.userComment != ''){ //should never need this...
 		connection.query('SELECT * FROM entries', function(err,rows){
 			if (err){throw err;} 
@@ -62,11 +61,13 @@ app.post("/submit", function(request,response){
 								 + dataRow[3] + '\", \"%m/%d/%Y %H:%i:%s\"))');
 			}
 			response.render('application');
+			connection.end();
 			response.end();	
 		});
 	}
 	else{
 		response.render('application');
+		connection.end();
 		response.end();
 	}
 });
@@ -76,8 +77,10 @@ app.post("/submit", function(request,response){
 * Will render resultpage.jade and will display the table entries
 **/
 app.get("/ViewGuestbook", function(request,response){
+	connection.connect();
 	connection.query('SELECT * FROM entries', function(err,rows){
 		response.render('resultpage', {'rows':rows}); 
+		connection.end();
 		response.end();
 	});
 });
@@ -102,6 +105,7 @@ app.get("/RemoveGuest", function(req,res){
 * Deletes selected guest from entries
 **/
 app.post("/DeleteGuest", function(req,res){
+	connection.connect();
 	if(req.body.removeName == '' && req.body.removeID == ''){
 		res.render('application');
 		res.end();
@@ -125,6 +129,7 @@ app.post("/DeleteGuest", function(req,res){
 			else{
 				connection.query('SELECT * FROM entries', function(err,rows){
 					res.render('resultpage', {'rows':rows});
+					connection.end();
 					res.end();
 				});
 			}
