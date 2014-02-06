@@ -6,7 +6,7 @@ var connection = mysql.createConnection({user: 'bd6c78b4c94ff4',
 										 password: 'b92672d2', 
 										 host: 'us-cdbr-east-05.cleardb.net', 
 										 database: 'heroku_fce19200850a746'});
-connection.connect();
+
 
 var app = express();
 
@@ -35,6 +35,7 @@ function GetDateTime(){
 /*********************** Requests & Response *********************************/
 
 app.get("/", function(req, res){
+		connection.connect();
 		res.render('application');
 		res.end();
 });
