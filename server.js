@@ -86,7 +86,7 @@ app.get("/sign-in", function(req,res){
 /**
 * Opens deleteguest.jade when Delete is clicked
 **/
-app.post("/RemoveGuest", function(req,res){
+app.get("/RemoveGuest", function(req,res){
 	res.render('deleteguest');
 	res.end();
 });
@@ -94,8 +94,8 @@ app.post("/RemoveGuest", function(req,res){
 /**
 * Deletes selected guest from entries
 **/
-app.get("/DeleteGuest", function(req,res){
-	if(req.query.removeName == '' && req.query.removeID == ''){
+app.post("/DeleteGuest", function(req,res){
+	if(req.body.removeName == '' && req.body.removeID == ''){
 		res.render('application');
 		res.end();
 	}
@@ -103,15 +103,15 @@ app.get("/DeleteGuest", function(req,res){
 		//builds the queryString depending on what was entered in(id & name or id OR name)
 		var queryString = 'DELETE FROM entries WHERE ';
 		var addAnd = false;
-		if(req.query.removeID != ''){
-			queryString += 'id = \"' + req.query.removeID + '\"';
+		if(req.body.removeID != ''){
+			queryString += 'id = \"' + req.body.removeID + '\"';
 			addAnd = true;
 		}
-		if(req.query.removeName != ''){
+		if(req.body.removeName != ''){
 			if(addAnd){
 				queryString += ' AND ';
 			}
-			queryString += 'name = \"' + req.query.removeName + '\"';
+			queryString += 'name = \"' + req.body.removeName + '\"';
 		}
 		connection.query(queryString, function(err,rows){
 			if(err){throw err;}
