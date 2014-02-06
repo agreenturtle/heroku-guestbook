@@ -35,7 +35,7 @@ function GetDateTime(){
 
 var connection;
 
-function handleDisconnet(){
+function handleDisconnect(){
 	connection = mysql.createConnection({user: 'bd6c78b4c94ff4', 
 											 password: 'b92672d2', 
 											 host: 'us-cdbr-east-05.cleardb.net', 
@@ -57,7 +57,7 @@ function handleDisconnet(){
 	})
 }
 
-handleDisconnet();
+handleDisconnect();
 
 /*********************** Requests & Response *********************************/
 
