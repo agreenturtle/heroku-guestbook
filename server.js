@@ -7,6 +7,9 @@ var connection = mysql.createConnection({user: 'bd6c78b4c94ff4',
 										 host: 'us-cdbr-east-05.cleardb.net', 
 										 database: 'heroku_fce19200850a746'});
 
+
+connection.connect();
+
 var app = express();
 
 app.use(express.bodyParser());
@@ -31,6 +34,30 @@ function GetDateTime(){
 	return datetime;
 }
 
+function handleDisconnect(){
+	connection = mysql.createConnection({user: 'bd6c78b4c94ff4', 
+											 password: 'b92672d2', 
+											 host: 'us-cdbr-east-05.cleardb.net', 
+											 database: 'heroku_fce19200850a746'});
+    connection.connect(function(err) {              // The server is either down
+      if(err) {                                     // or restarting (takes a while sometimes).
+        console.log('error when connecting to db:', err);
+        setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
+      }                                     // to avoid a hot loop, and to allow our node script to
+    });                                     // process asynchronous requests in the meantime.
+                                            // If you're also serving http, display a 503 error.
+    connection.on('error', function(err) {
+      console.log('db error', err);
+      if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
+        handleDisconnect();                         // lost due to either server restart, or a
+      } else {                                      // connnection idle timeout (the wait_timeout
+        throw err;                                  // server variable configures this)
+      }
+	})
+}
+
+handleDisconnet();
+
 /*********************** Requests & Response *********************************/
 
 app.get("/", function(req, res){
@@ -45,7 +72,6 @@ app.get("/", function(req, res){
 			[ID, name, comment, date]
 **/
 app.post("/submit", function(request,response){
-	connection.connect();
 	if(request.body.userComment && request.body.userComment != ''){ //should never need this...
 		connection.query('SELECT * FROM entries', function(err,rows){
 			if (err){throw err;} 
@@ -61,13 +87,11 @@ app.post("/submit", function(request,response){
 								 + dataRow[3] + '\", \"%m/%d/%Y %H:%i:%s\"))');
 			}
 			response.render('application');
-			connection.end();
 			response.end();	
 		});
 	}
 	else{
 		response.render('application');
-		connection.end();
 		response.end();
 	}
 });
@@ -77,10 +101,8 @@ app.post("/submit", function(request,response){
 * Will render resultpage.jade and will display the table entries
 **/
 app.get("/ViewGuestbook", function(request,response){
-	connection.connect();
 	connection.query('SELECT * FROM entries', function(err,rows){
 		response.render('resultpage', {'rows':rows}); 
-		connection.end();
 		response.end();
 	});
 });
@@ -105,7 +127,6 @@ app.get("/RemoveGuest", function(req,res){
 * Deletes selected guest from entries
 **/
 app.post("/DeleteGuest", function(req,res){
-	connection.connect();
 	if(req.body.removeName == '' && req.body.removeID == ''){
 		res.render('application');
 		res.end();
@@ -129,7 +150,6 @@ app.post("/DeleteGuest", function(req,res){
 			else{
 				connection.query('SELECT * FROM entries', function(err,rows){
 					res.render('resultpage', {'rows':rows});
-					connection.end();
 					res.end();
 				});
 			}
