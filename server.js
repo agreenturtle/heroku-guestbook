@@ -2,13 +2,6 @@
 var express = require("express");
 var mysql = require("mysql2");
 
-/*var connection = mysql.createConnection({user: 'bd6c78b4c94ff4', 
-										 password: 'b92672d2', 
-										 host: 'us-cdbr-east-05.cleardb.net', 
-										 database: 'heroku_fce19200850a746'});
-
-connection.connect();*/
-
 var connection;
 
 var db_config = mysql.createConnection({user: 'bd6c78b4c94ff4', 
