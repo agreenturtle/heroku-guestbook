@@ -11,7 +11,7 @@
 	<h3> Please sign-in my guestbook: </h3>
 	<br>
 	<div class='container col-md-6'>
-	<form name='GuestForm' class='form' role='form'>
+	<form name='GuestForm' class='form' role='form' action='/submit' method='post'>
 		<div class='form-group'>
 			<label for='inputName'>Name</label>
 			<input type='text' name='userName' class='form-control input-normal' placeholder='Enter Name'>
@@ -22,12 +22,16 @@
 		</div>
 		<div class='form-group'>
 			<button type='submit' class='btn btn-default'>Submit Guest</button>
-			<button type='submit' formaction='/ViewGuestbook' formmethod='get' class='btn btn-primary'>View Guestbook</button>
-			<button type='submit' formaction='/RemoveGuest' formmethod='get' class='btn btn-danger'>Delete</button>
 		</div>
 	</form>
+	<form action='/ViewGuestbook' method='get'>
+		<button type='submit' class='btn btn-primary'>View Guestbook</button>
+	</form>
+	<form action='/RemoveGuest' method='get'>
+		<button type='submit' class='btn btn-danger'>Delete</button>
+	</form>
 	</div>
-	<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+	<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
 	<div id="foot">
     	<div class="logo"></div>
    		<div class="text-left">

@@ -33,7 +33,7 @@ body
 									div.col-md-4.
 										#{rows[i].created_at}
 				- }
-				
-		button(type='submit', class='btn btn-info', formaction='/sign-in', formmethod='get').
-			Back
+		form(name='submitButton' action='/sign-in' method='get')		
+			button(type='submit' class='btn btn-info').
+				Back
 			

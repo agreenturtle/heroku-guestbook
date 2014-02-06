@@ -11,7 +11,7 @@
 	<h3> Please enter whom you'd like to remove: </h3>
 	<br>
 	<div class='container col-md-6'>
-		<form name='RemoveForm' class='form' role='form'>
+		<form name='RemoveForm' class='form' role='form' action='/DeleteGuest' method='post'>
 			<div class='form-group'>
 				<label for='inputID'>ID</label>
 				<input type='text' name='removeID' class='form-control input-normal' placeholder='Enter ID'>
@@ -21,9 +21,11 @@
 				<input type='text' name='removeName' class='form-control input-normal' placeholder='Enter Name'>
 			</div>
 			<div class='form-group'>
-				<button type='submit' formaction='/DeleteGuest' formmethod='post' class='btn btn-danger'>Delete Guest</button>
-				<button type='submit' formaction='/sign-in' formmethod='get' class='btn btn-default'>Cancel</button>
+				<button type='submit' class='btn btn-danger'>Delete Guest</button>
 			</div>
+		</form>
+		<form action='/sign-in' method='get'>
+			<button type='submit' class='btn btn-default'>Cancel</button>
 		</form>
 	</div>
 </body>

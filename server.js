@@ -33,20 +33,26 @@ function GetDateTime(){
 
 /*********************** Requests & Response *********************************/
 
+app.get("/", function(req, res){
+		res.render('application');
+		res.end();
+
+});
+
 /**
 * From the start page will first open application.jade->application.html
 * When Submit Guest button is clicked it will enter data into the MySQL database, entries
 * dataRow - is the row of data that will be entered in to entries in the format:
 			[ID, name, comment, date]
 **/
-app.get("/", function(request,response){
-	if(request.query.userComment && request.query.userComment != ''){ //check for page's initial load
+app.post("/submit", function(request,response){
+	if(request.body.userComment && request.body.userComment != ''){ //check for page's initial load
 		connection.query('SELECT * FROM entries', function(err,rows){
 			if (err){throw err;} 
 			else{
 				var dateTime = GetDateTime();
 				var idCount = rows.length + 1;
-				var dataRow = [idCount, request.query.userName, request.query.userComment, dateTime];			
+				var dataRow = [idCount, request.body.userName, request.body.userComment, dateTime];			
 			
 				connection.query('INSERT INTO entries (id, name, comment, created_at) VALUES (\"'
 								 + dataRow[0] + '\", \"' 
