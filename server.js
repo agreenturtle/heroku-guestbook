@@ -9,6 +9,13 @@ var mysql = require("mysql2");
 
 connection.connect();*/
 
+var connection;
+
+var db_config = mysql.createConnection({user: 'bd6c78b4c94ff4', 
+										 password: 'b92672d2', 
+										 host: 'us-cdbr-east-05.cleardb.net', 
+										 database: 'heroku_fce19200850a746'});
+
 var app = express();
 
 app.use(express.bodyParser());
@@ -33,13 +40,8 @@ function GetDateTime(){
 	return datetime;
 }
 
-var connection;
-
 function handleDisconnect(){
-	connection = mysql.createConnection({user: 'bd6c78b4c94ff4', 
-											 password: 'b92672d2', 
-											 host: 'us-cdbr-east-05.cleardb.net', 
-											 database: 'heroku_fce19200850a746'});
+	connection = mysql.createConnection(db_config);
     connection.connect(function(err) {              // The server is either down
       if(err) {                                     // or restarting (takes a while sometimes).
         console.log('error when connecting to db:', err);
@@ -115,7 +117,7 @@ app.get("/sign-in", function(req,res){
 	res.render('application');
 	res.end();
 });
-
+ 
 /**
 * Opens deleteguest.jade when Delete is clicked
 **/
