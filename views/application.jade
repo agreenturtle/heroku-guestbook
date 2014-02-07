@@ -10,8 +10,10 @@ body
 		p This is my sample guestbook, where we can write into a MySQL database, view it and delete from it. So with that being said, please sign-in my guestbook and try it for yourself! 
 		p
 			form(class='form-inline')
-				a(href='/ViewGuestbook' class='btn btn-primary btn-lg'). View Guestbook
-				a(href='/RemoveGuest' class='btn btn-danger btn-lg'). Remove a Guest
+				div(class='form-group')
+					a(href='/ViewGuestbook' class='btn btn-primary btn-lg'). View Guestbook
+				div(class='form-group')
+					a(href='/RemoveGuest' class='btn btn-danger btn-lg'). Remove a Guest
 
 	div(class="container")
 		form(name='GuestForm' class='form' action='/submit' method='post')
@@ -72,11 +74,10 @@ body
 
 	div(style='background-color:#eee')
 		footer(class='bs-footer' role='contentinfo')
-			br
-			p(class='text-center') Designed, built and maintained by James
-			p(class='text-center') with hopes this will one day kick off a
-			p(class='text-center') fun and adventurous journey into the programming world
-			br
+			p(class='text-center').
+				Designed, built and maintained by James
+				with hopes this will one day kick off a
+				fun and adventurous journey into the programming world
 
 
     
