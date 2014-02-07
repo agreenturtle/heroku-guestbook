@@ -11,7 +11,7 @@ app.use(express.bodyParser());
 app.set('view engine', 'jade');  
 
 app.use(express.static(process.cwd() + '/public'));
-
+app.use(express.static(process.cwd() + '/views'));
 /*********************** Helper Functions *************************************/
 /**
 * This function will get the current date and time and return in the format 

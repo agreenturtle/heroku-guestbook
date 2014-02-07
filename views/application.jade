@@ -9,13 +9,10 @@ body
 		h1 Hello & Welcome!!! 
 		p This is my sample guestbook, where we can write into a MySQL database, view it and delete from it. So with that being said, please sign-in my guestbook and try it for yourself! 
 		p
-			div(class='form-inline')
-				form(action='/ViewGuestbook' method='get')
-					button(type='submit' class='btn btn-primary btn-lg').
-						View Guestbook
-				form(action='/RemoveGuest' method='get')
-					button(type='submit' class='btn btn-danger btn-lg').
-						Remove a Guest
+			form(class='form-inline')
+				a(href='ViewGuestbook' class='btn btn-primary btn-lg') View Guestbook
+				a(href='/RemoveGuest' class='btn btn-danger btn-lg') Remove a Guest
+
 	div(class="container")
 		form(name='GuestForm' class='form' action='/submit' method='post')
 			div(class=form-group)
@@ -61,14 +58,11 @@ body
 												div.col-md-4.
 													#{rows[i].created_at}
 							- }
-					
-			form(action='/hide' method='get')
-				button(type='submit' class='btn btn-info').
-					Hide Guestbook
-
+			a(href='/hide' class='btn btn-info') Hide Guestbook
+			br
  
     
-	div(class='center-block' style='background-color:#eee')
+	div(style='background-color:#eee')
 		footer(class='bs-footer' role='contentinfo')
 			br
 			p(class='text-center') Designed, built and maintained by James
