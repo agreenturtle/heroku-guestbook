@@ -10,8 +10,8 @@ body
 		p This is my sample guestbook, where we can write into a MySQL database, view it and delete from it. So with that being said, please sign-in my guestbook and try it for yourself! 
 		p
 			form(class='form-inline')
-				a(href='ViewGuestbook' class='btn btn-primary btn-lg') View Guestbook
-				a(href='/RemoveGuest' class='btn btn-danger btn-lg') Remove a Guest
+				a(href='/ViewGuestbook' class='btn btn-primary btn-lg'). View Guestbook
+				a(href='/RemoveGuest' class='btn btn-danger btn-lg'). Remove a Guest
 
 	div(class="container")
 		form(name='GuestForm' class='form' action='/submit' method='post')
@@ -25,7 +25,7 @@ body
 				button(type='submit' class='btn btn-success').
 					Submit Guest
 
-	- if(show)
+	- if(show){
 		div.container
 			div(class='panel panel-info')
 				div(class='panel-heading').
@@ -60,8 +60,16 @@ body
 							- }
 			a(href='/hide' class='btn btn-info') Hide Guestbook
 			br
- 
-    
+	- }
+	script.
+		document.forms['GuestForm'].addEventListener("submit", function(event){
+			var form = this;
+			if(form.querySelectorAll("input")[1].value == ''){
+				event.preventDefault();
+				alert("To submit, please enter a comment");
+			}
+		});
+
 	div(style='background-color:#eee')
 		footer(class='bs-footer' role='contentinfo')
 			br
@@ -69,14 +77,6 @@ body
 			p(class='text-center') with hopes this will one day kick off a
 			p(class='text-center') fun and adventurous journey into the programming world
 			br
-
-	- //document.forms['GuestForm'].addEventListener("submit", function(event){
-		- //var form = this;
-		- //if(form.querySelectorAll("input")[1].value == ''){
-			- //event.preventDefault();
-			- //alert("Please enter comment");
-		- //}
-	- //});
 
 
     
