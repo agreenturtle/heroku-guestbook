@@ -2,7 +2,8 @@ head
 	title Welcome to Guestbook
 	
 	link(href="/css/bootstrap.min.css" rel="stylesheet")
-	
+	script(src="../server.js" type="text/javascript" charset="utf-8")
+
 body
 	div(class='jumbotron')
 		h1 Hello & Welcome!!! 
@@ -65,12 +66,23 @@ body
 				button(type='submit' class='btn btn-info').
 					Hide Guestbook
 
+ 
+    
+	div(class='center-block' style='background-color:#eee')
+		footer(class='bs-footer' role='contentinfo')
+			br
+			p(class='text-center') Designed, built and maintained by James
+			p(class='text-center') with hopes that this will one day kick off a
+			p(class='text-center') fun and adventurous journey into the programming world
+			br
 
-	script(src="../server.js" type="text/javascript" charset="utf-8")
-		- //document.forms['GuestForm'].addEventListener("submit", function(event){
-			- //var form = this;
-			- //if(form.querySelectorAll("input")[1].value == ''){
-				- //event.preventDefault();
-				- //alert("Please enter comment");
-			- //}
-		- //});
+	- //document.forms['GuestForm'].addEventListener("submit", function(event){
+		- //var form = this;
+		- //if(form.querySelectorAll("input")[1].value == ''){
+			- //event.preventDefault();
+			- //alert("Please enter comment");
+		- //}
+	- //});
+
+
+    

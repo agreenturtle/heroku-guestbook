@@ -58,8 +58,8 @@ handleDisconnect();
 /*********************** Requests & Response *********************************/
 
 app.get("/", function(req, res){
-	//show=false;
-	res.render('application');
+	show=false;
+	res.render('application',{'show':show});
 	res.end();
 });
 
