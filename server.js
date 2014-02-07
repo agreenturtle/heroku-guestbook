@@ -2,14 +2,10 @@
 var express = require("express");
 var mysql = require("mysql2");
 
-var connection;
-
-var db_config = mysql.createConnection({user: 'bd6c78b4c94ff4', 
-										 password: 'b92672d2', 
-										 host: 'us-cdbr-east-05.cleardb.net', 
-										 database: 'heroku_fce19200850a746'});
-
 var app = express();
+
+//show will is the toggle variable that will show or hide the guestbook
+var show = false;
 
 app.use(express.bodyParser());
 app.set('view engine', 'jade');  
@@ -33,8 +29,13 @@ function GetDateTime(){
 	return datetime;
 }
 
+var connection;
+
 function handleDisconnect(){
-	connection = mysql.createConnection(db_config);
+	connection = mysql.createConnection({user: 'bd6c78b4c94ff4', 
+										 password: 'b92672d2', 
+										 host: 'us-cdbr-east-05.cleardb.net', 
+										 database: 'heroku_fce19200850a746'});
     connection.connect(function(err) {              // The server is either down
       if(err) {                                     // or restarting (takes a while sometimes).
         console.log('error when connecting to db:', err);
@@ -57,8 +58,9 @@ handleDisconnect();
 /*********************** Requests & Response *********************************/
 
 app.get("/", function(req, res){
-		res.render('application');
-		res.end();
+	show=false;
+	res.render('application',{'show':show});
+	res.end();
 });
 
 /**
@@ -82,12 +84,14 @@ app.post("/submit", function(request,response){
 					 			 + dataRow[2] + '\", STR_TO_DATE(\"' 
 								 + dataRow[3] + '\", \"%m/%d/%Y %H:%i:%s\"))');
 			}
-			response.render('application');
+			show=false;
+			response.render('application',{'show':show});
 			response.end();	
 		});
 	}
 	else{
-		response.render('application');
+		show=false;
+		response.render('application',{'show':show});
 		response.end();
 	}
 });
@@ -97,8 +101,9 @@ app.post("/submit", function(request,response){
 * Will render resultpage.jade and will display the table entries
 **/
 app.get("/ViewGuestbook", function(request,response){
+	show = true;
 	connection.query('SELECT * FROM entries', function(err,rows){
-		response.render('resultpage', {'rows':rows}); 
+		response.render('application', {'rows':rows, 'show':show}); 
 		response.end();
 	});
 });
@@ -107,10 +112,16 @@ app.get("/ViewGuestbook", function(request,response){
 * Goes back to the HomePage (application.html) page
 **/
 app.get("/sign-in", function(req,res){
-	res.render('application');
+	show=false;
+	res.render('application',{'show':show});
 	res.end();
 });
- 
+
+app.get('/hide',function(req,res){
+	show=false;
+	res.render('application',{'show':show})
+});
+
 /**
 * Opens deleteguest.jade when Delete is clicked
 **/
@@ -124,7 +135,8 @@ app.get("/RemoveGuest", function(req,res){
 **/
 app.post("/DeleteGuest", function(req,res){
 	if(req.body.removeName == '' && req.body.removeID == ''){
-		res.render('application');
+		show=false;
+		res.render('application',{'show':show});
 		res.end();
 	}
 	else{  
@@ -145,7 +157,8 @@ app.post("/DeleteGuest", function(req,res){
 			if(err){throw err;}
 			else{
 				connection.query('SELECT * FROM entries', function(err,rows){
-					res.render('resultpage', {'rows':rows});
+					show=true;
+					res.render('application', {'rows':rows, 'show':show});
 					res.end();
 				});
 			}

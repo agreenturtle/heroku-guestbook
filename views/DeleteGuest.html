@@ -7,17 +7,20 @@
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body> 
-	
-	<h3> Please enter whom you'd like to remove: </h3>
+	<div class='jumbotron'>
+		<h2> Please enter whom you'd like to remove: 
+			<small>	You can delete by their ID number and/or name. </small>
+		</h2>
+	</div>
 	<br>
 	<div class='container col-md-6'>
 		<form name='RemoveForm' class='form' role='form' action='/DeleteGuest' method='post'>
 			<div class='form-group'>
-				<label for='inputID'>ID</label>
+				<label for='inputID'>ID to remove</label>
 				<input type='text' name='removeID' class='form-control input-normal' placeholder='Enter ID'>
 			</div>
 			<div class='form-group'>
-				<label for='inputName'>Name</label>
+				<label for='inputName'>Name to remove</label>
 				<input type='text' name='removeName' class='form-control input-normal' placeholder='Enter Name'>
 			</div>
 			<div class='form-group'>
@@ -25,7 +28,7 @@
 			</div>
 		</form>
 		<form action='/sign-in' method='get'>
-			<button type='submit' class='btn btn-default'>Cancel</button>
+			<button type='submit' class='btn btn-warning'>Cancel</button>
 		</form>
 	</div>
 </body>

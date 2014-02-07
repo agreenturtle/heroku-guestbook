@@ -1,1 +1,76 @@
-include Application.html
+head
+	title Welcome to Guestbook
+	
+	link(href="/css/bootstrap.min.css" rel="stylesheet")
+	
+body
+	div(class='jumbotron')
+		h1 Hello & Welcome!!! 
+		p This is my sample guestbook page, where we will write into a MySQL database, view it and delete from it. So with that being said, please sign-in my guestbook and try it for yourself! 
+		p
+			div(class='form-inline')
+				form(action='/ViewGuestbook' method='get')
+					button(type='submit' class='btn btn-primary btn-lg').
+						View Guestbook
+				form(action='/RemoveGuest' method='get')
+					button(type='submit' class='btn btn-danger btn-lg').
+						Remove a Guest
+	div(class="container")
+		form(name='GuestForm' class='form' action='/submit' method='post')
+			div(class=form-group)
+				label Name
+				input(type='text' name='userName' class='form-control input-normal' placeholder='Enter Name')
+			div.form-group
+				label Comments
+				input(type='text' name='userComment' class='form-control input-normal' placeholder='Enter Comments')
+			div.form-group
+				button(type='submit' class='btn btn-success').
+					Submit Guest
+
+	- if(show)
+		div.container
+			div(class='panel panel-info')
+				div(class='panel-heading').
+					My Guestbook
+				div(class='panel-body')
+					table(class='table table-hover')
+						thread
+							tr
+								th
+									div.row-odd
+										div.col-md-1.
+											ID
+										div.col-md-2.
+											Name
+										div.col-md-5.
+											Comments
+										div.col-md-4.
+											Created on					
+							- for(var i = 0; i < rows.length; i++){
+								tbody
+									tr
+										td
+											div.row
+												div.col-md-1.
+													#{rows[i].id}
+												div.col-md-2.
+													#{rows[i].name}
+												div.col-md-5.
+													#{rows[i].comment}
+												div.col-md-4.
+													#{rows[i].created_at}
+							- }
+					
+			form(action='/hide' method='get')
+				button(type='submit' class='btn btn-info').
+					Hide Guestbook
+
+
+	script(src="../server.js" type="text/javascript" charset="utf-8")
+		- //document.forms['GuestForm'].addEventListener("submit", function(event){
+			- //var form = this;
+			- //if(form.querySelectorAll("input")[1].value == ''){
+				- //event.preventDefault();
+				- //alert("Please enter comment");
+			- //}
+		- //});
